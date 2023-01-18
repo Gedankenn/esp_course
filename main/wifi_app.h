@@ -10,7 +10,7 @@
 #define WIFI_AP_GATEWAY             "192.168.5.1"   // AP default gateway
 #define WIFI_AP_NETMASK             "255.255.255.0" // AP default mask
 #define WIFI_AP_BAMDWIDTH           WIFI_BW_HT20    // AP bandwidth 20MHZ
-#define WII_STA_POWER_SAVE          WIFI_PS_NONE    // Power save not used
+#define WIFI_STA_POWER_SAVE         WIFI_PS_NONE    // Power save not used
 #define MAX_SSID_LENGHT             32              // IEEE standart maximun
 #define MAX_PASSWORD_LENGHT         64              // IEEE standart maximun
 #define MAX_CONNECTION_RETRIES      5               // Retry number on disconnection
