@@ -5,5 +5,10 @@
         "target/esp32.cfg"
     ],
     "idf.flashType": "UART",
-    "idf.port": "/dev/ttyUSB1"
+    "idf.port": "/dev/ttyACM0",
+    "files.associations": {
+        "http_server.h": "c",
+        "wifi_app.h": "c",
+        "tasks_common.h": "c"
+    }
 }

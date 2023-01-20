@@ -1,6 +1,6 @@
 #include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
 #include "freertos/event_groups.h"
+#include "freertos/task.h"
 
 #include "esp_err.h"
 #include "esp_log.h"
@@ -9,6 +9,7 @@
 
 #include "tasks_common.h"
 #include "wifi_app.h"
+#include "http_server.h"
 
 static const char TAG [] = "wifi_app";
 
@@ -67,6 +68,7 @@ static void wifi_app_event_handler(void *arg, esp_event_base_t event_base, int32
         {
             case IP_EVENT_STA_GOT_IP:
                 ESP_LOGI(TAG,"IP_EVENT_STA_GOT_IP");
+                wifi_app_send_message(WIFI_APP_MSG_STA_CONNECTED_GOT_IP);
                 break;
         }
     }
@@ -111,7 +113,7 @@ static void wifi_app_soft_ap_config(void)
 
     // Configure DHCP for the AP
     esp_netif_ip_info_t ap_ip_info;
-    memset(&ap_ip_info, 0, sizeof(ap_ip_info));
+    memset(&ap_ip_info, 0x00, sizeof(ap_ip_info));
 
     esp_netif_dhcps_stop(esp_netif_ap);                     // must call this first
     inet_pton(AF_INET, WIFI_AP_IP, &ap_ip_info.ip);         // assing acces point's static IP, GW, and netmask
@@ -163,7 +165,7 @@ static void wifi_app_task(void *pvParameters)
 
     // Send first event message
 
-    wifi_ap_send_message(WIFI_APP_MSG_START_HTTP_SERVER);
+    wifi_app_send_message(WIFI_APP_MSG_START_HTTP_SERVER);
 
     for(;;)
     {
@@ -173,11 +175,11 @@ static void wifi_app_task(void *pvParameters)
             {
                 case WIFI_APP_MSG_START_HTTP_SERVER:
                     ESP_LOGI(TAG, "WIFI_APP_MSG_START_HTTP_SERVER");
+                    http_server_start();
                     break;
                 
                 case WIFI_APP_MSG_CONNECTING_FROM_HTTP_SERVER:
                     ESP_LOGI(TAG, "WIFI_APP_MSG_CONNECTING_FROM_HTTP_SERVER");
-
                     break;
                 
                 case WIFI_APP_MSG_STA_CONNECTED_GOT_IP:
@@ -208,9 +210,16 @@ void wifi_app_start(void)
     // Disable default wifi logging messages
     esp_log_level_set("wifi",ESP_LOG_NONE);
 
+    // Allocate memory for the wifi configuration
+	// wifi_config = (wifi_config_t*)malloc(sizeof(wifi_config_t));
+	// memset(wifi_config, 0x00, sizeof(wifi_config_t));
+
     // Create message queue
     wifi_app_queue_handle = xQueueCreate(3, sizeof(wifi_app_queue_message_t));
-
+	
+    // Create Wifi application event group
+	// wifi_app_event_group = xEventGroupCreate();
+    
     // Start wifi application task
     xTaskCreatePinnedToCore(&wifi_app_task, "wifi_app_task",WIFI_APP_TASK_STACK_SIZE, NULL, WIFI_APP_TASK_PRIORITY, NULL, WIFI_APP_TASK_CORE_ID);
 }
