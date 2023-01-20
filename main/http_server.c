@@ -369,6 +369,43 @@ static esp_err_t http_server_wifi_connect_json_handler(httpd_req_t *req)
 }
 
 /**
+ * wifiConnectInfo.json handler updates the web page with connection info
+ * @param req HTTP request for witch the uri needs to be handled
+ * @return ESP_OK
+*/
+static esp_err_t http_server_wifi_get_connect_info_json_handler(httpd_req_t *req)
+{
+    ESP_LOGI(TAG, "\\wifiConnectInfo.json requested");
+
+    char ipInfoJson[200];
+    memset(ipInfoJson, 0, sizeof(ipInfoJson));
+
+    char ip[IP4ADDR_STRLEN_MAX];
+    char netmask[IP4ADDR_STRLEN_MAX];
+    char gw[IP4ADDR_STRLEN_MAX];
+
+    if(g_wifi_connect_status == HTTP_WIFI_STATUS_SUCCESS)
+    {
+        wifi_ap_record_t wifi_data;
+        ESP_ERROR_CHECK(esp_wifi_sta_get_ap_info(&wifi_data));
+        char *ssid = (char*)wifi_data.ssid;
+
+        esp_netif_ip_info_t ip_info;
+        ESP_ERROR_CHECK(esp_netif_get_ip_info(esp_netif_sta, &ip_info));
+
+        esp_ip4addr_ntoa(&ip_info.ip,ip,IP4ADDR_STRLEN_MAX);
+        esp_ip4addr_ntoa(&ip_info.netmask,netmask,IP4ADDR_STRLEN_MAX);
+        esp_ip4addr_ntoa(&ip_info.gw,gw,IP4ADDR_STRLEN_MAX);
+
+        sprintf(ipInfoJson, "{\"ip\":\"%s\",\"netmask\":\"%s\",\"gw\":\"%s\",\"ap\":\"%s\"}",ip,netmask,gw,ssid);
+    }
+    httpd_resp_set_type(req, "application/json");
+    httpd_resp_send(req, ipInfoJson, strlen(ipInfoJson));
+
+    return ESP_OK;
+}
+
+/**
  * wifiConnectStatus handler updates the connection status for the web page
  * @param req HTTP request for witch the uri needs to be handled
  * @return ESP_OK
@@ -508,7 +545,14 @@ static httpd_handle_t http_server_configure(void)
         };
         httpd_register_uri_handler(http_server_handle, &wifi_connect_status_json);
 
-
+        // register wifiConnectInfo.json handler
+        httpd_uri_t wifi_connect_info_json = {
+            .uri = "/wifiConnectInfo.json",
+            .method = HTTP_GET,
+            .handler = http_server_wifi_get_connect_info_json_handler,
+            .user_ctx = NULL
+        };
+        httpd_register_uri_handler(http_server_handle, &wifi_connect_info_json);
         return http_server_handle;
     }
     return NULL;
