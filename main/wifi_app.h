@@ -1,3 +1,7 @@
+#include "freertos/FreeRTOS.h"
+#include "freertos/event_groups.h"
+#include "freertos/task.h"
+
 #include "esp_netif.h"
 
 #define WIFI_AP_SSID                "fabio_esp"     //AP name
@@ -22,7 +26,6 @@ extern esp_netif_t* esp_netif_ap;
 /**
 *   
 */
-
 typedef enum wifi_app_message
 {
     WIFI_APP_MSG_START_HTTP_SERVER = 0,
@@ -35,7 +38,6 @@ typedef enum wifi_app_message
  * Struct for the message queue
  * @note Expand this based on application requirements e.g
 */
-
 typedef struct wifi_app_queue_message
 {
     wifi_app_message_e msgID;
@@ -46,7 +48,7 @@ typedef struct wifi_app_queue_message
  * @param msgID message ID frm the wifi_app_message_e enum.
  * @return pdTRUE if an item was successfully sent to the queue, otherwise pdFALSE
 */
-BaseType_t wifi_ap_send_message(wifi_app_message_e msgID);
+BaseType_t wifi_app_send_message(wifi_app_message_e msgID);
 
 /**
  * Starts wifi RTOS Task
