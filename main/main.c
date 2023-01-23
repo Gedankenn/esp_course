@@ -2,6 +2,17 @@
 
 #include "nvs_flash.h"
 #include "wifi_app.h"
+#include "wifi_reset_button.h"
+#include "esp_log.h"
+#include "sntp_time_sync.h"
+
+static const char TAG[] = "main";
+
+void wifi_application_connected_events(void)
+{
+    ESP_LOGI(TAG,"wifi applicaiton connected");
+    sntp_time_sync_task_start();
+}
 
 void app_main(void)
 {
@@ -16,4 +27,10 @@ void app_main(void)
 
     // Start wifi
     wifi_app_start();
+    
+    // Configure wifi reset button
+    wifi_reset_button_config();
+
+    // Set connected event callback
+    wifi_app_set_callback(&wifi_application_connected_events);
 }
