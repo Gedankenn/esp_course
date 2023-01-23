@@ -9,6 +9,9 @@
 
 #include "esp_netif.h"
 
+// Callback typefed
+typedef void (*wifi_connected_event_callback_t)(void);
+
 #define WIFI_AP_SSID                "fabio_esp"     //AP name
 #define WIFI_AP_PASSWORD            "password"      // AP password
 #define WIFI_AP_CHANNEL             1               // AP channel
@@ -36,6 +39,8 @@ typedef enum wifi_app_message
     WIFI_APP_MSG_START_HTTP_SERVER = 0,
     WIFI_APP_MSG_CONNECTING_FROM_HTTP_SERVER,
     WIFI_APP_MSG_STA_CONNECTED_GOT_IP,
+    WIFI_APP_MSG_USER_REQUESTED_STA_DISCONNECT,
+    WIFI_APP_MSG_LOAD_SAVED_CREDENTIALS,
     WIFI_APP_MSG_STA_DISCONNECTED,
 
 } wifi_app_message_e;
@@ -65,3 +70,13 @@ void wifi_app_start(void);
  * Gets the wifi configuration
 */
 wifi_config_t* wifi_app_get_wifi_config(void);
+
+/**
+ * Sets the callback function.
+*/
+void wifi_app_set_callback(wifi_connected_event_callback_t cb);
+
+/**
+ * Calls the callback function
+*/
+void wifi_app_call_callback(void);

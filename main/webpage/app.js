@@ -11,7 +11,7 @@ var wifiConnectInterval = null;
 $(document).ready(function(){
 	getSSID();
 	getUpdateStatus();
-	startDHTSensorInterval();
+	// startDHTSensorInterval();
 	startLocalTimeInterval();
 	getConnectInfo();
 	$("#connect_wifi").on("click", function(){
@@ -130,21 +130,21 @@ function otaRebootTimer()
 /**
  * Gets DHT22 sensor temperature and humidity values for display on the web page.
  */
-function getDHTSensorValues()
-{
-	$.getJSON('/dhtSensor.json', function(data) {
-		$("#temperature_reading").text(data["temp"]);
-		$("#humidity_reading").text(data["humidity"]);
-	});
-}
+// function getDHTSensorValues()
+// {
+// 	$.getJSON('/dhtSensor.json', function(data) {
+// 		$("#temperature_reading").text(data["temp"]);
+// 		$("#humidity_reading").text(data["humidity"]);
+// 	});
+// }
 
 /**
  * Sets the interval for getting the updated DHT22 sensor values.
  */
-function startDHTSensorInterval()
-{
-	setInterval(getDHTSensorValues, 5000);    
-}
+// function startDHTSensorInterval()
+// {
+// 	setInterval(getDHTSensorValues, 5000);    
+// }
 
 /**
  * Clears the connection status interval.
@@ -333,24 +333,3 @@ function getSSID()
 		$("#ap_ssid").text(data["ssid"]);
 	});
 }
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-    
-
-
