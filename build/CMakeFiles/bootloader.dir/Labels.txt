@@ -1,13 +1,13 @@
 # Target labels
  bootloader
 # Source files and their labels
-/home/fabio/github/esp_course/build/CMakeFiles/bootloader
-/home/fabio/github/esp_course/build/CMakeFiles/bootloader.rule
-/home/fabio/github/esp_course/build/CMakeFiles/bootloader-complete.rule
-/home/fabio/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
-/home/fabio/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
-/home/fabio/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
-/home/fabio/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
-/home/fabio/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
-/home/fabio/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
-/home/fabio/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/home/sabo/github/esp_course/build/CMakeFiles/bootloader
+/home/sabo/github/esp_course/build/CMakeFiles/bootloader.rule
+/home/sabo/github/esp_course/build/CMakeFiles/bootloader-complete.rule
+/home/sabo/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/sabo/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/sabo/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/sabo/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/sabo/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/sabo/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/sabo/github/esp_course/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
