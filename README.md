@@ -65,4 +65,4 @@ idf.py build
 idf.py -p /dev/ttyUSB0 flash monitor   # replace with your serial port
 ```
 
-Then connect to the `fabio_esp` access point and open `http://192.168.5.1/`. The SoftAP password is set in `main/wifi_app.h` (`WIFI_AP_PASSWORD`).
+Then connect to the `fabio_esp` access point and open `http://192.168.5.1/`. The SoftAP password comes from `main/secrets.h` (`WIFI_AP_PASSWORD`, gitignored): before building, run `cp main/secrets.h.example main/secrets.h` and set it.
