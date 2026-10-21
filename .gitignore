@@ -103,3 +103,6 @@ managed_components
 
 # pytest log
 pytest_embedded_log/
+
+# Local secrets
+main/secrets.h

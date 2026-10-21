@@ -13,7 +13,11 @@
 typedef void (*wifi_connected_event_callback_t)(void);
 
 #define WIFI_AP_SSID                "fabio_esp"     //AP name
-#define WIFI_AP_PASSWORD            "REDACTED"      // AP password
+#if __has_include("secrets.h")
+#include "secrets.h"                                // WIFI_AP_PASSWORD (AP password), gitignored
+#else
+#error "main/secrets.h missing: copy main/secrets.h.example to main/secrets.h and set WIFI_AP_PASSWORD"
+#endif
 #define WIFI_AP_CHANNEL             1               // AP channel
 #define WIFI_AP_SSID_HIDDEN         0               // AP visibility
 #define WIFI_AP_MAX_CONNECTIONS     5               // AP max connections
